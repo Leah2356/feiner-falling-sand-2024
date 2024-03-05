@@ -1,8 +1,11 @@
 package feiner.fallingsand;
 
+import java.lang.reflect.Array;
+
 public class Sand {
 
     private int[][] field = new int[3][3];
+
     public String toString() {
         StringBuilder builder = new StringBuilder();
 
@@ -32,5 +35,14 @@ public class Sand {
     public void fall() {
         // moves all sand down one square
         // if it reaches the floor or sand is below it
+        for (int y = field.length - 1; y >= 0; y++) {
+            for (int x = 0; x < field[y].length; x++) {
+                if (field[y][x] == 1) {
+                    // Next, move sand down
+                    field[y][x] = 0;
+                    field[y + 1][x] = 1;
+                }
+            }
+        }
     }
 }
