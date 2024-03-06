@@ -35,9 +35,9 @@ public class Sand {
     public void fall() {
         // moves all sand down one square
         // if it reaches the floor or sand is below it
-        for (int y = field.length - 1; y >= 0; y--) {
+        for (int y = field.length - 2; y >= 0; y--) {
             for (int x = 0; x < field[y].length; x++) {
-                if (field[y][x] == 1) {
+                if (field[y][x] == 1 && field[y + 1][x] == 0) {
                     // Next, move sand down
                     field[y][x] = 0;
                     field[y + 1][x] = 1;
