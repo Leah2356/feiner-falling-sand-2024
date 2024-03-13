@@ -1,16 +1,27 @@
 package feiner.fallingsand;
 
-import java.lang.reflect.Array;
+import java.util.Random;
 
 public class Sand {
 
-    private int[][] field = new int[3][3];
+    private final int[][] field;
+
+    private final Random random;
+
+    public Sand(int width, int height) {
+        field = new int[height][width];
+        this.random = new Random();
+    }
+
+    public Sand(int width, int height, Random random) {
+        field = new int[height][width];
+        this.random = random;
+    }
 
     public String toString() {
         StringBuilder builder = new StringBuilder();
-
-        for (int y = 0; y < 3; y++) {
-            for (int x = 0; x < 3; x++) {
+        for (int y = 0; y < field.length; y++) {
+            for (int x = 0; x < field[y].length; x++) {
                 builder.append(field[y][x]);
             }
             builder.append("\n");
@@ -34,15 +45,42 @@ public class Sand {
 
     public void fall() {
         // moves all sand down one square
-        // if it reaches the floor or sand is below it
         for (int y = field.length - 2; y >= 0; y--) {
             for (int x = 0; x < field[y].length; x++) {
-                if (field[y][x] == 1 && field[y + 1][x] == 0) {
-                    // Next, move sand down
-                    field[y][x] = 0;
-                    field[y + 1][x] = 1;
+                if (field[y][x] == 1) {
+                    if (field[y + 1][x] == 0) {
+                        // does the sand fall straight down?
+                        field[y][x] = 0;
+                        field[y + 1][x] = 1;
+                        continue;
+                    }
+
+                    boolean rightFirst = random.nextBoolean();
+                    int direction1 = rightFirst ? 1 : -1;
+                    int direction2 = rightFirst ? -1 : 1;
+                    if (field[y + 1][x + direction1] == 0) {
+                        field[y][x] = 0;
+                        field[y + 1][x + direction1] = 1;
+                    } else if (field[y + 1][x + direction2] == 0) {
+                        field[y][x] = 0;
+                        field[y + 1][x + direction2] = 1;
+                    } else {
+                        field[y][x] = 1;
+                    }
                 }
             }
         }
     }
+
+    /**
+     * Add a method called randomSand(int n).
+     * This will add n pieces of sand into the field in random positions
+     */
+    public void randomSand(int n) {
+        for (int i = 0; i < n; i++) {
+            int y = random.nextInt(field.length);
+            int x = random.nextInt(field.length);
+        }
+    }
+
 }
