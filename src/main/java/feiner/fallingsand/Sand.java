@@ -18,6 +18,10 @@ public class Sand {
         this.random = random;
     }
 
+    public int[][] getField() {
+        return field;
+    }
+
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (int y = 0; y < field.length; y++) {
@@ -80,5 +84,4 @@ public class Sand {
             int x = random.nextInt(field[0].length);
         }
     }
-
 }
