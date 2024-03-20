@@ -62,10 +62,11 @@ public class Sand {
                     boolean rightFirst = random.nextBoolean();
                     int direction1 = rightFirst ? 1 : -1;
                     int direction2 = rightFirst ? -1 : 1;
-                    if (field[y + 1][x + direction1] == 0 && y + 1 < field.length && x + direction1 < field[y].length) {
+                    if (x + direction1 >= 0 && x + direction1 < field[y].length && field[y + 1][x + direction1] == 0) {
                         field[y][x] = 0;
                         field[y + 1][x + direction1] = 1;
-                    } else if ((y + 1 < field.length && x + direction2 >= 0 && x + direction2 < field[y].length && field[y + 1][x + direction2] == 0)) {
+                    } else if (x + direction2 >= 0 && x + direction2 < field[y].length &&
+                            field[y + 1][x + direction2] == 0) {
                         field[y][x] = 0;
                         field[y + 1][x + direction2] = 1;
                     }
