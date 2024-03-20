@@ -6,6 +6,7 @@ import java.awt.*;
 public class SandComponent extends JComponent {
 
     private final Sand sand;
+    private int[][] field;
 
     public SandComponent(Sand sand) {
         this.sand = sand;
@@ -14,7 +15,10 @@ public class SandComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
-        // draw the sand
+        for (int y = 0; y < field.length; y++) {
+            for (int x = 0; x < field[y].length; y++) {
+                g.fillRect(3, 3, 3, 3);
+            }
+        }
     }
 }
