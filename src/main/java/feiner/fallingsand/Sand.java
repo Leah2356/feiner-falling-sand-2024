@@ -18,6 +18,10 @@ public class Sand {
         this.random = random;
     }
 
+    public int[][] getField() {
+        return field;
+    }
+
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (int y = 0; y < field.length; y++) {
@@ -58,10 +62,12 @@ public class Sand {
                     boolean rightFirst = random.nextBoolean();
                     int direction1 = rightFirst ? 1 : -1;
                     int direction2 = rightFirst ? -1 : 1;
-                    if (field[y + 1][x + direction1] == 0) {
+                    if (x + direction1 >= 0 && x + direction1 < field[y].length
+                            && field[y + 1][x + direction1] == 0) {
                         field[y][x] = 0;
                         field[y + 1][x + direction1] = 1;
-                    } else if (field[y + 1][x + direction2] == 0) {
+                    } else if (x + direction2 >= 0 && x + direction2 < field[y].length
+                            && field[y + 1][x + direction2] == 0) {
                         field[y][x] = 0;
                         field[y + 1][x + direction2] = 1;
                     }
@@ -80,5 +86,4 @@ public class Sand {
             int x = random.nextInt(field[0].length);
         }
     }
-
 }
