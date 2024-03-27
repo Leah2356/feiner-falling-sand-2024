@@ -2,29 +2,74 @@ package feiner.fallingsand;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 public class SandComponent extends JComponent {
 
     private final Sand sand;
-    private int[][] field;
 
     public SandComponent(Sand sand) {
         this.sand = sand;
-        this.field = sand.getField();
+
+        Timer timer = new Timer(10, e -> repaint());
+        timer.start();
+
+        addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                sand.put(e.getX(), e.getY(), 10, 10, .3);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                sand.put(e.getX(), e.getY(), 10, 10, .3);
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+            }
+        });
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        sand.fall();
-        repaint();
-        field = sand.getField();
-        g.setColor(Color.BLUE);
+
+        sand.resize(getWidth(), getHeight());
+
         // draw the sand
-        for (int y = 0; y < field.length; y++) {
-            for (int x = 0; x < field[y].length; x++) {
-                if (field[y][x] == 1) {
-                    g.fillRect(x * 5, y, 5, 5);
+        sand.fall();
+
+        g.setColor(Color.darkGray);
+        for (int y = 0; y < sand.getHeight(); y++) {
+            for (int x = 0; x < sand.getWidth(); x++) {
+                if (sand.isSand(x, y)) {
+                    g.fillRect(x, y, 1, 1);
                 }
             }
         }
